@@ -11,10 +11,11 @@ namespace _04.Code_Documentation_and_Comments
     {
         static void Main(string[] args)
         {
+            Console.InputEncoding = Encoding.Unicode;
             string userInput = Console.ReadLine();
+            
+            Console.WriteLine(StringExtensions.ConvertCyrillicToLatinLetters(userInput));
 
-            Console.WriteLine(StringExtensions.ToMd5Hash(userInput));
-            Console.WriteLine(StringExtensions.ToDateTime(userInput));
         }
     }
 }

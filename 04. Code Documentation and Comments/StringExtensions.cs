@@ -9,7 +9,7 @@
     using System.Text.RegularExpressions;
 
     /// <summary>
-    /// A static class that extends the functionality of the String class.
+    /// A static class that extends the functionality of the String class with multiple methods.
     /// </summary>
     public static class StringExtensions
     {
@@ -96,7 +96,11 @@
             DateTime.TryParse(input, out dateTimeValue);
             return dateTimeValue;
         }
-
+        /// <summary>
+        /// Makes the first letter of the input string capital.
+        /// </summary>
+        /// <param name="input">Input string which first letter is going to be capitalized.</param>
+        /// <returns>The string with capitalized first letter.</returns>
         public static string CapitalizeFirstLetter(this string input)
         {
             if (string.IsNullOrEmpty(input))
@@ -106,16 +110,25 @@
 
             return input.Substring(0, 1).ToUpper(CultureInfo.CurrentCulture) + input.Substring(1, input.Length - 1);
         }
-
+        /// <summary>
+        /// Extracts the string between two substrings.
+        /// </summary>
+        /// <param name="input">The input string</param>
+        /// <param name="startString">The first string to search from</param>
+        /// <param name="endString">The end string</param>
+        /// <param name="startFrom">Where to start the search from. Default is index 0.</param>
+        /// <returns></returns>
         public static string GetStringBetween(this string input, string startString, string endString, int startFrom = 0)
         {
+            //Overrites the input string to search in less text.
             input = input.Substring(startFrom);
+            //Resets startForm to 0 in case other value was set in the call.
             startFrom = 0;
             if (!input.Contains(startString) || !input.Contains(endString))
             {
                 return string.Empty;
             }
-
+            
             var startPosition = input.IndexOf(startString, startFrom, StringComparison.Ordinal) + startString.Length;
             if (startPosition == -1)
             {
@@ -130,7 +143,11 @@
 
             return input.Substring(startPosition, endPosition - startPosition);
         }
-
+        /// <summary>
+        /// Coverts Cyrillic input string to Latin output string.
+        /// </summary>
+        /// <param name="input">String input in Cyrillic alphabet.</param>
+        /// <returns>The lating representation of the input.</returns>
         public static string ConvertCyrillicToLatinLetters(this string input)
         {
             var bulgarianLetters = new[]
@@ -152,7 +169,11 @@
 
             return input;
         }
-
+        /// <summary>
+        /// Converts Latin string to their Cyrillic representation.
+        /// </summary>
+        /// <param name="input">String in Latin letters.</param>
+        /// <returns>The Cyrillic representation of the letter.</returns>
         public static string ConvertLatinToCyrillicKeyboard(this string input)
         {
             var latinLetters = new[]
@@ -176,24 +197,41 @@
 
             return input;
         }
-
+        /// <summary>
+        /// Converst a wrong user name to valid user name by removing invalid symbols and converting the string to latin.
+        /// </summary>
+        /// <param name="input">Any input string.</param>
+        /// <returns>Valid string for User name.</returns>
         public static string ToValidUsername(this string input)
         {
             input = input.ConvertCyrillicToLatinLetters();
             return Regex.Replace(input, @"[^a-zA-z0-9_\.]+", string.Empty);
         }
-
+        /// <summary>
+        /// Replaces invalid file name to valid file name by converting to latin and replacing blank spaces with a dash.
+        /// </summary>
+        /// <param name="input">Invalid file name string.</param>
+        /// <returns>Valid file name string.</returns>
         public static string ToValidLatinFileName(this string input)
         {
             input = input.Replace(" ", "-").ConvertCyrillicToLatinLetters();
             return Regex.Replace(input, @"[^a-zA-z0-9_\.\-]+", string.Empty);
         }
-
+        /// <summary>
+        /// Gets the first x characters in a string.
+        /// </summary>
+        /// <param name="input">String to get the first characters from.</param>
+        /// <param name="charsCount">The number of characters to extract.</param>
+        /// <returns>String of the first x characters.</returns>
         public static string GetFirstCharacters(this string input, int charsCount)
         {
             return input.Substring(0, Math.Min(input.Length, charsCount));
         }
-
+        /// <summary>
+        /// Gets the file extention in a file name.
+        /// </summary>
+        /// <param name="fileName">The full file name with the extention at the end.</param>
+        /// <returns>The extention of the file.</returns>
         public static string GetFileExtension(this string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))
@@ -209,7 +247,11 @@
 
             return fileParts.Last().Trim().ToLower();
         }
-
+        /// <summary>
+        /// Converts the file extenstion to the full contet type(MIME type).
+        /// </summary>
+        /// <param name="fileExtension">The short file extention string.</param>
+        /// <returns>The full conten type(MIME type) string.</returns>
         public static string ToContentType(this string fileExtension)
         {
             var fileExtensionToContentType = new Dictionary<string, string>
@@ -233,7 +275,11 @@
 
             return "application/octet-stream";
         }
-
+        /// <summary>
+        /// Converts a string to a byte array.
+        /// </summary>
+        /// <param name="input">A string to be converted to byte array.</param>
+        /// <returns>A byte array representation of the input.</returns>
         public static byte[] ToByteArray(this string input)
         {
             var bytesArray = new byte[input.Length * sizeof(char)];
