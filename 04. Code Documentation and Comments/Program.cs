@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Telerik.ILS.Common;
 
 namespace _04.Code_Documentation_and_Comments
 {
@@ -10,7 +11,10 @@ namespace _04.Code_Documentation_and_Comments
     {
         static void Main(string[] args)
         {
-            //hey there
+            string userInput = Console.ReadLine();
+
+            Console.WriteLine(StringExtensions.ToMd5Hash(userInput));
+            Console.WriteLine(StringExtensions.ToDateTime(userInput));
         }
     }
 }

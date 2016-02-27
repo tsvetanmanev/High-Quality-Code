@@ -8,8 +8,16 @@
     using System.Text;
     using System.Text.RegularExpressions;
 
+    /// <summary>
+    /// A static class that extends the functionality of the String class.
+    /// </summary>
     public static class StringExtensions
     {
+        /// <summary>
+        /// Converts a String to its MD5Hash representation.
+        /// </summary>
+        /// <param name="input">A string to be converted.</param>
+        /// <returns>A string of the MD5 code equivelent to the input.</returns>
         public static string ToMd5Hash(this string input)
         {
             var md5Hash = MD5.Create();
@@ -31,34 +39,57 @@
             // Return the hexadecimal string.
             return builder.ToString();
         }
-
+        /// <summary>
+        /// Converts a string to a positive or negative boolean value.
+        /// Positive words yield a "true" bool.
+        /// </summary>
+        /// <param name="input">String containing positive or negative words such as "true", "ok", "yes", "1", "да"</param>
+        /// <returns>Returns a positive bool if the input contains positive words. In all other cases returns negative bool</returns>
         public static bool ToBoolean(this string input)
         {
+            ///Initializes an array of expected positive strings
             var stringTrueValues = new[] { "true", "ok", "yes", "1", "да" };
+            ///Checks if any of the positive strings is contained in the input - if yes it returns true. Otherwise it returns false.
             return stringTrueValues.Contains(input.ToLower());
         }
-
+        /// <summary>
+        /// Converts the string to a short(System.Int16) if possible.
+        /// </summary>
+        /// <param name="input">String consisting of integer number in the range of -32,768 to 32,767 to be converted to short(Signed 16-bit integer)</param>
+        /// <returns>The short(System.Int16) representation of the string or 0 if input is invalid.</returns>
         public static short ToShort(this string input)
         {
             short shortValue;
             short.TryParse(input, out shortValue);
             return shortValue;
         }
-
+        /// <summary>
+        /// Converts a string to int(Systen.Int32).
+        /// </summary>
+        /// <param name="input">String consisting of integer number in the range of -2,147,483,648 to 2,147,483,647 to be converted to int(System.Int32)</param>
+        /// <returns>The int(System.Int32) representation of the string or 0 if input is invalid.</returns>
         public static int ToInteger(this string input)
         {
             int integerValue;
             int.TryParse(input, out integerValue);
             return integerValue;
         }
-
+        /// <summary>
+        /// Converts a string to long(System.Int64)
+        /// </summary>
+        /// <param name="input">String consisting of integer number in the range of –9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 to be converted to long(System.Int64)</param>
+        /// <returns>The long(System.Int32) representation of the string or 0 if input is invalid.</returns>
         public static long ToLong(this string input)
         {
             long longValue;
             long.TryParse(input, out longValue);
             return longValue;
         }
-
+        /// <summary>
+        /// Converts a string to DateTime object.
+        /// </summary>
+        /// <param name="input">String consisting of valid date and/or time data</param>
+        /// <returns>The DateTime representation of the input or the default value for DateTime object.</returns>
         public static DateTime ToDateTime(this string input)
         {
             DateTime dateTimeValue;
